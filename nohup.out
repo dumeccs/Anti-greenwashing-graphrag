@@ -1,0 +1,111 @@
+
+   FastAPI   Starting development server 🚀
+ 
+             Searching for package file structure from directories with __init__.py files
+             Importing from /Users/jeremiahlena/Desktop/graphrag-backend
+ 
+    module   🐍 main.py
+ 
+      code   Importing the FastAPI app object from the module with the following code:
+ 
+             from main import app
+ 
+       app   Using import string: main:app
+ 
+    server   Server started at http://127.0.0.1:8000
+    server   Documentation at http://127.0.0.1:8000/docs
+ 
+       tip   Running in development mode, for production use: fastapi run
+ 
+             Logs:
+ 
+      INFO   Will watch for changes in these directories: ['/Users/jeremiahlena/Desktop/graphrag-backend']
+      INFO   Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+      INFO   Started reloader process [29505] using WatchFiles
+      INFO   Started server process [29519]
+      INFO   Waiting for application startup.
+      INFO   Application startup complete.
+      INFO   Shutting down
+      INFO   Waiting for application shutdown.
+      INFO   Application shutdown complete.
+      INFO   Finished server process [29519]
+      INFO   Stopping reloader process [29505]
+
+
+   FastAPI   Starting development server 🚀
+ 
+             Searching for package file structure from directories with __init__.py files
+             Importing from /Users/jeremiahlena/Desktop/graphrag-backend
+ 
+    module   🐍 main.py
+ 
+      code   Importing the FastAPI app object from the module with the following code:
+ 
+             from main import app
+ 
+       app   Using import string: main:app
+ 
+    server   Server started at http://127.0.0.1:8000
+    server   Documentation at http://127.0.0.1:8000/docs
+ 
+       tip   Running in development mode, for production use: fastapi run
+ 
+             Logs:
+ 
+      INFO   Will watch for changes in these directories: ['/Users/jeremiahlena/Desktop/graphrag-backend']
+      INFO   Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+      INFO   Started reloader process [29566] using WatchFiles
+      INFO   Started server process [29582]
+      INFO   Waiting for application startup.
+      INFO   Application startup complete.
+      INFO   127.0.0.1:56169 - "GET / HTTP/1.1" 200
+      INFO   127.0.0.1:56169 - "GET /favicon.ico HTTP/1.1" 404
+      INFO   127.0.0.1:56184 - "GET / HTTP/1.1" 200
+      INFO   127.0.0.1:56184 - "GET / HTTP/1.1" 200
+      INFO   127.0.0.1:56184 - "GET / HTTP/1.1" 200
+      INFO   127.0.0.1:56194 - "GET /items HTTP/1.1" 404
+      INFO   127.0.0.1:56204 - "GET /items/1 HTTP/1.1" 200
+      INFO   127.0.0.1:56216 - "GET /items/1?q=jeremiah&q=lena HTTP/1.1" 200
+      INFO   127.0.0.1:58116 - "GET /items/1?q=jeremiah&q=lena HTTP/1.1" 200
+      INFO   127.0.0.1:58137 - "GET /items/1?q=jeremiah HTTP/1.1" 200
+   WARNING   WatchFiles detected changes in 'rag/__init__.py'. 
+             Reloading...
+      INFO   Shutting down
+      INFO   Waiting for application shutdown.
+      INFO   Application shutdown complete.
+      INFO   Finished server process [29582]
+      INFO   Started server process [13808]
+      INFO   Waiting for application startup.
+      INFO   Application startup complete.
+   WARNING   WatchFiles detected changes in 'rag/retrieve.py'. 
+             Reloading...
+      INFO   Shutting down
+      INFO   Waiting for application shutdown.
+      INFO   Application shutdown complete.
+      INFO   Finished server process [13808]
+      INFO   Started server process [13889]
+      INFO   Waiting for application startup.
+      INFO   Application startup complete.
+   WARNING   WatchFiles detected changes in 'rag/llm.py'. Reloading...
+      INFO   Shutting down
+      INFO   Waiting for application shutdown.
+      INFO   Application shutdown complete.
+      INFO   Finished server process [13889]
+      INFO   Started server process [13932]
+      INFO   Waiting for application startup.
+      INFO   Application startup complete.
+   WARNING   WatchFiles detected changes in 'rag/prompts.py'. 
+             Reloading...
+      INFO   Shutting down
+      INFO   Waiting for application shutdown.
+      INFO   Application shutdown complete.
+      INFO   Finished server process [13932]
+      INFO   Started server process [13981]
+      INFO   Waiting for application startup.
+      INFO   Application startup complete.
+      INFO   Shutting down
+      INFO   Waiting for application shutdown.
+      INFO   Application shutdown complete.
+      INFO   Finished server process [13981]
+      INFO   Stopping reloader process [29566]
+

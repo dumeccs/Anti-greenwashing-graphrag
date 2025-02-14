@@ -1,0 +1,406 @@
+MERGE (rule:Rule {name: "Anti-Greenwashing Rule"})
+SET rule.effectiveDate = date("2023-11-01")
+
+MERGE (policyStatement:Rule {name: "Policy Statement on Sustainability Disclosure Requirements (SDR) and Investment Labels (PS23/16)"})
+SET policyStatement.effectiveDate = date("2023-11-01")
+
+MERGE (rule)-[:appliesTo]->(policyStatement)
+
+MERGE (consumer:Stakeholder {stakeholderType: "Consumer"})
+MERGE (firm:Firm)
+MERGE (consumer)-[:interactsWith]->(firm)
+
+MERGE (sustainableProducts:Product {productCategory: "Sustainable Products"})
+MERGE (sustainableServices:Product {productCategory: "Sustainable Services"})
+
+MERGE (firm)-[:makes]->(claim:Claim {description: "Sustainability-related claims about products and services"})
+
+MERGE (survey:Evidence {description: "Financial Lives Survey (2022)"})
+SET survey.dateCollected = datetime("2022-01-01T00:00:00")
+
+MERGE (claim)-[:supportedBy]->(survey)
+
+---------
+
+MERGE (r:Rule {name: "anti-greenwashing rule"})
+SET r.description = "clarify to firms that sustainability-related claims about their products and services must be fair, clear and not misleading"
+
+MERGE (f:Firm)
+WITH r, f
+MERGE (r)-[:appliesTo]->(f)
+
+MERGE (c:Claim)
+SET c.description = "sustainability-related claims about products and services"
+
+MERGE (f)-[:makes]->(c)
+
+MERGE (s:Stakeholder {stakeholderType: "Consumer"})
+WITH s, f
+MERGE (s)-[:interactsWith]->(f)
+
+MERGE (s)-[:interactsWith]->(r)
+
+---------
+
+MERGE (:Rule {name: "anti‑greenwashing rule"})
+MERGE (:Claim {description: "sustainability‑related claims about products and services"})
+MERGE (:Product)
+MERGE (:Stakeholder {stakeholderType: "Consumer"})
+MERGE (:Stakeholder {stakeholderType: "Firm"})
+
+---------
+
+MERGE (rule:Rule {name: 'Anti-Greenwashing Rule'})
+SET rule.description = 'Guidance on the anti‑greenwashing rule',
+    rule.jurisdiction = 'UK'
+
+MERGE (product:Product {productCategory: 'Sustainable Finance'})
+
+MERGE (characteristic: SustainabilityCharacteristic {characteristicType: 'Environmental'})
+MERGE (characteristic2: SustainabilityCharacteristic {characteristicType: 'Social'})
+MERGE (characteristic3: SustainabilityCharacteristic {characteristicType: 'Governance'})
+
+MERGE (product)-[:HAS]->(characteristic)
+MERGE (product)-[:HAS]->(characteristic2)
+MERGE (product)-[:HAS]->(characteristic3)
+
+MERGE (firm:Firm)
+MERGE (rule)-[:APPLIES_TO]->(firm)
+
+---------
+
+MERGE (r1:Rule {name: 'Social and Governance (ESG)Sourcebook', description: 'requires firms to ensure that any reference to the sustainability characteristics of a product or service is: consistent with the sustainability characteristics of the product or service, and is fair, clear and not misleading.', jurisdiction: 'UK'})
+MERGE (r2:Rule {name: 'anti‑greenwashing rule', description: 'applies when a firm communicates with clients in the UK in relation to a product or service, or communicates a financial promotion (or approves a financial promotion for communication) to a person in the UK.', jurisdiction: 'UK'})
+MERGE (r2)-[:appliesTo]->(:Firm)
+
+MERGE (c1:SustainabilityCharacteristic {characteristicType: 'Environmental'})
+MERGE (c2:SustainabilityCharacteristic {characteristicType: 'Social'})
+MERGE (pr:Product)
+MERGE (esg:Product {productCategory: 'Sustainability Characteristics'})
+MERGE (r1)-[:appliesTo]->(:Firm)
+
+MERGE (esg)-[:has]->(c1)
+MERGE (esg)-[:has]->(c2)
+
+---------
+
+MERGE (rule:Rule)
+SET rule.description = "The rule applies in relation to financial products and services which FCA-authorised firms make available for clients in the UK. This includes financial promotions that authorised firms communicate or approve for unauthorised persons (including for overseas products and services where the promotion is approved in the UK)."
+
+MERGE (fcaFirm:Firm)
+SET fcaFirm.name = "FCA-authorised firms"
+
+MERGE (ukFirm:Firm)
+SET ukFirm.name = "UK"
+
+MERGE (rule)-[:appliesTo]->(fcaFirm)
+MERGE (rule)-[:appliesTo]->(ukFirm)
+
+MERGE (product:Product)
+MERGE (service:Product)
+SET product.description = "Product with sustainability characteristics (environmental and/or social)"
+SET service.description = "Service with sustainability characteristics (environmental and/or social)"
+
+MERGE (fcaFirm)-[:makes]->(product)
+MERGE (fcaFirm)-[:makes]->(service)
+
+MERGE (sustainabilityChar1:SustainabilityCharacteristic)
+SET sustainabilityChar1.characteristicType = "Environmental"
+
+MERGE (sustainabilityChar2:SustainabilityCharacteristic)
+SET sustainabilityChar2.characteristicType = "Social"
+
+MERGE (product)-[:has]->(sustainabilityChar1)
+MERGE (product)-[:has]->(sustainabilityChar2)
+MERGE (service)-[:has]->(sustainabilityChar1)
+MERGE (service)-[:has]->(sustainabilityChar2)
+
+---------
+
+MERGE (r:Rule {name: "Consumer Duty"})
+MERGE (r2:Rule {name: "Anti-Greenwashing Rule"})
+
+---------
+
+MERGE (r:Rule {name: "Rule 1"})
+SET r.description = "Claims should be correct and capable of being substantiated"
+
+MERGE (f:Firm)
+MERGE (c:Claim)
+MERGE (f)-[:makes]->(c)
+SET c.description = "The claims firms make should be factually correct. Firms should not state or imply features of a product or service that are not true. Nor should they overstate or exaggerate a product or service’s sustainability or positive environmental and/or social impact. Claims should only give the impression that a product or service has the sustainability characteristics that it really has. Claims can also be misleading if they provide conflicting or contradictory information."
+
+---------
+
+MERGE (c:Claim {description: "Firms should think carefully about whether they have the appropriate evidence to support their claims. It is also important that firms regularly review their claims and any evidence that supports them, to ensure the evidence is still relevant for so long as those claims are being communicated"})
+MERGE (r:Rule {name: "anti-greenwashing rule"})
+MERGE (f:Firm)
+MERGE (f)-[:makes]->(c)
+MERGE (c)-[:supportedBy]->(:Evidence)
+MERGE (c)-[:appliesTo]->(r)
+
+---------
+
+MERGE (f1:Firm {name: "Company involved in the production, selling, and distribution of fossil fuels"})
+MERGE (p1:Product {name: "Investment Fund"})
+MERGE (c1:Claim {description: "An investment fund is ‘fossil fuel free’",
+                claimStatus: "Pending"})
+MERGE (f1)-[:makes]->(c1)
+MERGE (p1)<-[:subjectTo]-(r1:Rule {name: "Fossil fuel involvement threshold"})
+MERGE (c1)-[:supportedBy]->(:Evidence {description: "Terms and conditions explaining investment in companies involved in fossil fuel", dateCollected: datetime('2023-10-11T00:00:00')})
+MERGE (s1:Stakeholder {stakeholderType: "Investor"})
+MERGE (s1)-[:interactsWith]->(p1)
+
+MERGE (p2:Product {name: "Fund"})
+MERGE (c2:Claim {description: "All investments are reviewed for their sustainability characteristics",
+                claimStatus: "Pending"})
+MERGE (f2:Firm {name: "Investment Manager"})
+MERGE (f2)-[:makes]->(c2)
+MERGE (p2)<-[:has]-(:SustainabilityCharacteristic {characteristicType: "Environmental"})
+MERGE (c2)-[:supportedBy]->(:Evidence {description: "Not all investments are reviewed for their sustainability characteristics", dateCollected: datetime('2023-10-11T00:00:00')})
+MERGE (s2:Stakeholder {stakeholderType: "Investor"})
+MERGE (s2)-[:interactsWith]->(p2)
+
+---------
+
+MERGE (c1:Claim)
+SET c1.description = "There is a risk that the investment manager is overstating the extent to which they consider the sustainability characteristics of investments in the fund and that this claim cannot be substantiated."
+
+MERGE (c2:Claim)
+SET c2.description = "Should the investment manager wish to make this claim, all their investments should be consistently reviewed for their sustainability characteristics, and the investment manager should hold evidence to demonstrate how they do this and how the review is factored into their decision‑making process."
+
+MERGE (sc:SustainabilityCharacteristic)
+MERGE (p:Product)
+SET p.description = "investments"
+MERGE (p)-[:HAS]->(sc)
+
+MERGE (f:Firm)
+SET f.name = "A firm"
+
+MERGE (f)-[:MAKES]->(c1)
+MERGE (f)-[:MAKES]->(c2)
+
+MERGE (e:Evidence)
+MERGE (c2)-[:SUPPORTEDBY]->(e)
+
+---------
+
+MERGE (f:Firm {name: "Unnamed Firm"})
+MERGE (p:Product {name: "Unnamed Fund", productCategory: "social sustainability"})
+MERGE (c:Claim {description: "Invests in companies with good labour practices"})
+MERGE (r:Rule {name: "Unnamed Rule 2", description: "Claims should be clear and presented in a way that can be understood"})
+MERGE (s:SustainabilityCharacteristic {characteristicType: "Social"})
+
+MERGE (f)-[:makes]->(c)
+MERGE (f)-[:interactsWith]->(p)
+MERGE (p)-[:has]->(s)
+MERGE (c)-[:supportedBy]->(e:Evidence {description: "Clear and robust standards for selecting investee companies with fair wages and safe working conditions"})
+MERGE (r)-[:appliesTo]->(f)
+
+---------
+
+// Extracting entities and relationships
+
+// Placeholder Firm entity
+MERGE (firm:Firm {name: "Unnamed Firm"})
+
+// Placeholder Claim entity
+MERGE (claim:Claim {description: "Firms make claims about the sustainability characteristics of their products."})
+
+// Connecting Firm to Claim
+MERGE (firm)-[:makes]->(claim)
+
+---------
+
+MERGE (p:Product {name: "Product or service with sustainability characteristics"})
+MERGE (sc:SustainabilityCharacteristic)
+MERGE (p)-[:HAS]->(sc)
+
+MERGE (f:Firm {name: "Firm"})
+
+MERGE (c:Claim {description: "Claim about sustainability characteristics"})
+MERGE (f)-[:MAKES]->(c)
+MERGE (sc)-[:SUPPORTED_BY]->()
+
+---------
+
+MERGE (r1:Rule)
+SET r1.name = "Final Rules"
+SET r1.description = "Final rules shaped by consumer testing findings."
+
+MERGE (p:Product)
+SET p.name = "SDR and Investment Labels"
+SET p.description = "Consumer research on SDR and investment labels."
+
+MERGE (c:Claim)
+SET c.description = "Sustainability-related claims by firms."
+
+MERGE (f:Firm)
+SET f.name = "Asset Management Firms"
+
+MERGE (s:Stakeholder)
+SET s.stakeholderType = "Consumer"
+
+MERGE (s1:Stakeholder)
+SET s1.stakeholderType = "Investor"
+
+MERGE (f)-[:interactsWith]->(p)
+
+MERGE (f)-[:makes]->(c)
+
+MERGE (c)-[:appliesTo]->(f)
+
+MERGE (s)-[:interactsWith]->(f)
+
+MERGE (s1)-[:interactsWith]->(p)
+
+MERGE (r1)-[:appliesTo]->(f)
+
+---------
+
+MERGE (firm:Firm {name: "Unnamed Firm"})
+MERGE (product1:Product {name: "Green Savings Account", productCategory: "Savings Account"})
+MERGE (product2:Product {name: "Other Savings Accounts", productCategory: "Savings Account"})
+MERGE (claim:Claim {description: "Sustainable Savings"})
+MERGE (sustainabilityCharacteristic:SustainabilityCharacteristic {characteristicType: "Environmental"})
+
+MERGE (firm)-[:makes]->(claim)
+
+MERGE (claim)-[:supportedBy]->(evidence:Evidence {description: "Image of a rainforest with text 'Sustainable Savings'"})
+
+MERGE (product1)-[:has]->(sustainabilityCharacteristic)
+MERGE (stakeholder:Stakeholder {stakeholderType: "Consumer"})
+MERGE (stakeholder)-[:interactsWith]->(firm)
+
+---------
+
+MERGE (r:Rule {name: "Rule 3"})
+  SET r.description = "Claims should be complete – they should not omit or hide important information"
+
+MERGE (p:Product {name: "Green Savings Account"})
+  SET p.productCategory = "Savings Account"
+
+MERGE (c1:SustainabilityCharacteristic {characteristicType: "Environmental"})
+MERGE (p)-[:has]->(c1)
+
+MERGE (f:Firm {name: "Unnamed Bank"})
+
+MERGE (f)-[:makes]->(c:Claim {description: "Green Savings Account claim about sustainability outcomes"})
+
+MERGE (c)-[:supportedBy]->(:Evidence {description: "Deposits in its ‘Green Savings Account’ are ringfenced to fund sustainable projects"})
+
+---------
+
+MERGE (:Rule {description: "Firms should not omit or hide important information that might influence decision-making. Where claims are only true if certain conditions apply, those should be clearly and prominently stated. Similarly, the limitations of any information, data or metrics used in a claim should be clearly and prominently disclosed. Claims should not highlight only positive sustainability impacts where this disguises negative impacts. Firms should present claims in a balanced way and not focus solely on a product or service’s positive sustainability characteristics, where other aspects may have a negative impact on sustainability. Similarly, firms should consider the life cycle of a product or service, as appropriate, when making sustainability-related claims. Firms should base their claims on the full life cycle of the product or service. Otherwise, for example in cases where certain elements of the life cycle may be more of interest in a consumer’s decision-making process."})
+
+---------
+
+MERGE (firm:Firm {name: "Bank"})
+MERGE (claim:Claim)
+SET claim.description = "claims about their sustainability impact"
+MERGE (firm)-[:makes]->(claim)
+
+MERGE (product:Product {name: "Bonds"})
+MERGE (claim)-[:appliesTo]->(product)
+
+MERGE (stakeholder:Stakeholder)
+SET stakeholder.stakeholderType = "Consumer"
+MERGE (stakeholder)-[:interactsWith]->(product)
+
+MERGE (sustainabilityCharacteristic:SustainabilityCharacteristic)
+SET sustainabilityCharacteristic.characteristicType = "Environmental"
+MERGE (product)-[:has]->(sustainabilityCharacteristic)
+
+---------
+
+MERGE (f:Firm {name: 'Unnamed Firm'})
+MERGE (sc:SustainabilityCharacteristic {characteristicType: 'Environmental'})
+MERGE (p:Product {name: 'Unnamed Bonds', productCategory: 'Bonds'})
+MERGE (p)-[:has]->(sc)
+MERGE (c:Claim {description: 'Bonds include investments in projects related to fossil fuels'})
+SET c.claimDate = datetime("2023-10-01")
+MERGE (f)-[:makes]->(c)
+MERGE (s:Stakeholder {stakeholderType: 'Consumer'})
+MERGE (s)-[:interactsWith]->(p)
+
+---------
+
+MERGE (r:Rule {description: "commonly tracked benchmark"})
+MERGE (c:Claim {description: "claim to be ‘sustainable’, by excluding companies with ESG ratings ‘lower than 3’"})
+MERGE (e1:Evidence {description: "does not specify what the rating aims to assess"})
+MERGE (e2:Evidence {description: "does not specify the scale the rating uses"})
+MERGE (e3:Evidence {description: "does not disclose the rationale for choosing an ESG score of 3"})
+MERGE (sc1:SustainabilityCharacteristic {characteristicType: "Environmental"})
+MERGE (sc2:SustainabilityCharacteristic {characteristicType: "Social"})
+MERGE (sc3:SustainabilityCharacteristic {characteristicType: "Governance"})
+
+MERGE (r)-[:appliesTo]->(c)
+MERGE (c)-[:supportedBy]->(e1)
+MERGE (c)-[:supportedBy]->(e2)
+MERGE (c)-[:supportedBy]->(e3)
+
+MERGE (p:Product {description: "benchmark", productCategory: "Financial"})
+MERGE (p)-[:has]->(sc1)
+MERGE (p)-[:has]->(sc2)
+MERGE (p)-[:has]->(sc3)
+
+MERGE (fm:Firm {description: "fund manager"})
+MERGE (c2:Claim {description: "advertises its asset selection process as ‘focused on supporting carbon intensive'"})
+MERGE (fm)-[:makes]->(c2)
+MERGE (sh:Stakeholder {stakeholderType: "Investor"})
+MERGE (sh)-[:interactsWith]->(p)
+
+---------
+
+MERGE (f:Firm {name: "Fund Manager"})
+MERGE (p:Product {name: "Sustainability‑Linked Bonds", productCategory: "Bonds"})
+MERGE (f)-[:makes]->(c:Claim {description: "Advertises its asset selection process as ‘focused on supporting carbon intensive companies with credible transition plans to finance their decarbonisation’"})
+MERGE (c)-[:supportedBy]->(e:Evidence {description: "SLB framework and qualities such as clear, measurable, and ambitious performance indicators and sustainability performance targets"})
+MERGE (p)-[:has]->(sc:SustainabilityCharacteristic {characteristicType: "Environmental"})
+MERGE (s:Stakeholder {stakeholderType: "Investor"})
+MERGE (s)-[:interactsWith]->(f)
+MERGE (r:Rule {name: "Rule 4", description: "Comparisons should be fair and meaningful"})
+
+---------
+
+MERGE (r:Rule {name: "Rule 4"})
+SET r.description = "Comparisons should be fair and meaningfulThe claims firms make when comparing a product or service, either to one of their previous versions or to a competitors’, should be fair and meaningful. Comparisons should enable the audience to make informed choices about the products or services.Claims comparing the sustainability characteristics of products and services should make clear what is being compared, how a comparison is being made and should compare like with like. Claims that appear to make market‑wide comparisons but are based only on a limited sample have the potential to mislead their audience. Firms should be careful when making claims about the extent to which a feature of a product or service has sustainability characteristics when it may simply be meeting a minimum standard of compliance with existing legal requirements. Such claims could be misleading, as, while they may be true, they may also wrongly give the impression that their product or service is superior to"
+
+---------
+
+MERGE (f:Firm {name: "Unnamed Firm"})
+MERGE (p:Product {name: "investment bond", productCategory: "Financial Product"})
+MERGE (f)-[:makes]->(c:Claim {description: "by buying their investment bond, investors will ‘reduce emissions’ more than through buying other investment bonds", claimStatus: "Pending"})
+MERGE (c)-[:supportedBy]->(e:Evidence {description: "comparison refers only to Scope 1 emissions and based on a limited sample at a particular date"})
+MERGE (p)-[:has]->(sc:SustainabilityCharacteristic {characteristicType: "Environmental"})
+MERGE (f)-[:interactsWith]->(p)
+
+---------
+
+MERGE (fca:Firm {name: "Financial Conduct Authority"})
+MERGE (asa:Firm {name: "Advertising Standards Authority"})
+MERGE (cma:Firm {name: "Competition and Markets Authority"})
+MERGE (consultationPaper:Product {name: "Consultation Paper", productCategory: "Publication"})
+MERGE (policyStatement:Product {name: "Policy Statement", productCategory: "Publication"})
+MERGE (guidanceConsultation:Product {name: "Guidance Consultation", productCategory: "Publication"})
+MERGE (conductOfBusinessSourcebook:Product {name: "Conduct of Business Sourcebook", productCategory: "Regulatory"})
+MERGE (sustainabilityDisclosureRequirements:Product {name: "Sustainability Disclosure Requirements", productCategory: "Regulatory"})
+MERGE (sustainabilityLinkedBonds:Product {name: "Sustainability-Linked Bonds", productCategory: "FinancialInstrument"})
+MERGE (environmentalSocialGovernance:SustainabilityCharacteristic {characteristicType: "Governance"})
+MERGE (productScope:Product {name: "Scope 1, 2 and 3 emissions", productCategory: "Environmental"})
+
+MERGE (fca)-[:interactsWith]->(consultationPaper)
+MERGE (fca)-[:interactsWith]->(policyStatement)
+MERGE (fca)-[:interactsWith]->(guidanceConsultation)
+MERGE (fca)-[:interactsWith]->(conductOfBusinessSourcebook)
+MERGE (fca)-[:interactsWith]->(sustainabilityDisclosureRequirements)
+MERGE (fca)-[:interactsWith]->(sustainabilityLinkedBonds)
+
+MERGE (esg:Claim {description: "ESG means Environmental, Social and Governance"})
+MERGE (fca)-[:makes]->(esg)
+
+MERGE (esg)-[:supportedBy]->(productScope)
+MERGE (productScope)-[:has]->(environmentalSocialGovernance)
+
+MERGE (uk:Stakeholder {name: "United Kingdom", stakeholderType: "Regulator"})
+MERGE (uk)-[:interactsWith]->(fca)
