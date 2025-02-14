@@ -27,8 +27,6 @@ user = os.getenv("NEO4J_USERNAME")
 password = os.getenv("NEO4J_PASSWORD")
 
 
-w = Weaviate()
-conn = Neo4jConnection(uri, user, password)
 model = LLM()
 
 def handle_stream(content):
@@ -41,6 +39,9 @@ async def chat(query: str):
     """
     Responds to user's query
     """
+    w = Weaviate()
+    conn = Neo4jConnection(uri, user, password)
+
     vector_context = w.search_vector(query=query)
     print("Vector Context:\n\n", vector_context)
     cypher_query = model.generate_cypher(query=query)
@@ -49,4 +50,7 @@ async def chat(query: str):
     print("Graph Context:\n\n", graph_context)
 
     stream = model.respond(question=query, graph_context=graph_context, vector_context=vector_context)
+
+    w.close()
+    conn.close()
     return StreamingResponse(handle_stream(stream))
