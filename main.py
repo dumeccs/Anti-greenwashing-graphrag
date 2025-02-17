@@ -8,10 +8,19 @@ from rag.weaviate import Weaviate
 from rag.neo4j import Neo4jConnection
 from rag.llm import LLM
 import os
+from fastapi.middleware.cors import CORSMiddleware
 
 load_dotenv()
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/")
@@ -26,12 +35,12 @@ uri = os.getenv("NEO4J_URI")
 user = os.getenv("NEO4J_USERNAME")
 password = os.getenv("NEO4J_PASSWORD")
 
-
 model = LLM()
 
 def handle_stream(content):
     for chunk in content:
-        yield chunk.text
+        yield f"event: message\ndata: {chunk.text}\n\n"
+    yield "event: message\ndata: END\n\n"
 
 
 @app.get("/chat")
@@ -53,4 +62,4 @@ async def chat(query: str):
 
     w.close()
     conn.close()
-    return StreamingResponse(handle_stream(stream))
+    return StreamingResponse(handle_stream(stream), headers={'Content-Type':'text/event-stream'}, media_type='text/event-stream')
