@@ -82,7 +82,7 @@ for chunk in texts:
         f"\n\nONTOLOGY:\n {ontology}\n\nCONTENT:\n {chunk}"
     )
     
-    response = client.models.generate_content(model="gemini-2.0-flash-001",
+    response = client.models.generate_content(model="gemini-2.0-pro-exp-02-05",
         contents=[
             SYSTEM,
             prompt

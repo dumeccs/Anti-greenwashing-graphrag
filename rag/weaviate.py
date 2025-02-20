@@ -50,6 +50,22 @@ class Weaviate:
             ]
         )
 
+    def __exit__(self, exc_type, exc_val, traceback):
+        """
+        Runs when exiting `with` block
+        """
+        print(f"Exception Type: {exc_type}")
+        print(f"Exception Value: {exc_val}")
+        print(f"Traceback: {traceback}")
+        self.close()
+
+    def __enter__(self):
+        """
+        Runs when entering `with` block
+        """
+        print("initializing weaviate")
+        return self
+    
     def close(self):
         """
         Closes the connection to the database
@@ -59,7 +75,7 @@ class Weaviate:
 
     def search_vector(self, query: str):
         """
-        Creates a document in the database
+        Searches for a vector in the database
         """
         res = self.collection.query.near_text(
             query=query,

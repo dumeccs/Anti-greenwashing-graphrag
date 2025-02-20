@@ -16,6 +16,24 @@ class Neo4jConnection:
         """
         self._driver.close()
 
+    def __enter__(self):
+        """
+        Runs when entering `with` block
+        """
+        print("initializing neo4j")
+        return self
+
+    def __exit__(self, exc_type, exc_val, traceback):
+        """
+        Runs when exiting `with` block
+        """
+        print(f"Exception Type: {exc_type}")
+        print(f"Exception Value: {exc_val}")
+        print(f"Traceback: {traceback}")
+        self.close()
+
+    
+
     def run_cypher(self, cypher_query):
         """
         Run a cypher query on the database

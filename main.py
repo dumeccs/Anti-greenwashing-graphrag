@@ -39,7 +39,8 @@ model = LLM()
 
 def handle_stream(content):
     for chunk in content:
-        yield f"event: message\ndata: {chunk.text}\n\n"
+        s = f"event: message\ndata: {repr(chunk.text)}\n\n"
+        yield s
     yield "event: message\ndata: END\n\n"
 
 
@@ -48,18 +49,18 @@ async def chat(query: str):
     """
     Responds to user's query
     """
-    w = Weaviate()
-    conn = Neo4jConnection(uri, user, password)
 
-    vector_context = w.search_vector(query=query)
-    print("Vector Context:\n\n", vector_context)
+    with Weaviate() as w:
+        vector_context = w.search_vector(query=query)
+        print("Vector Context:\n\n", vector_context)
+
     cypher_query = model.generate_cypher(query=query)
     print("Generated Cypher Query:\n\n", cypher_query)
-    graph_context = conn.run_cypher(cypher_query)
-    print("Graph Context:\n\n", graph_context)
+
+    with Neo4jConnection(uri, user, password) as conn:
+        graph_context = conn.run_cypher(cypher_query)
+        print("Graph Context:\n\n", graph_context)
 
     stream = model.respond(question=query, graph_context=graph_context, vector_context=vector_context)
 
-    w.close()
-    conn.close()
     return StreamingResponse(handle_stream(stream), headers={'Content-Type':'text/event-stream'}, media_type='text/event-stream')

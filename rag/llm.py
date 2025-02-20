@@ -2,8 +2,8 @@
 LLM
 """
 from google import genai
-import os
 from .prompts import context_providing_prompt, cypher_generating_prompt
+
 
 ONTOLOGY = """
 @prefix : <http://neo4j.com/voc/greenwashing#> .
@@ -219,8 +219,10 @@ class LLM:
     """
     def __init__(self):
         self.model = genai.Client(
-    api_key=(os.getenv("GEMINI_API_KEY")),
-)
+            vertexai=True,
+            location="us-central1",
+            project="gen-lang-client-0902554404"
+    )
 
     def respond(self, question: str, vector_context: str, graph_context: str):
         """
@@ -231,7 +233,7 @@ class LLM:
             "vector_context": vector_context,
             "graph_context": graph_context,
         })
-        return self.model.models.generate_content_stream(model="gemini-2.0-flash-001", contents=prompt.to_string())
+        return self.model.models.generate_content_stream(model="gemini-1.5-pro-002", contents=prompt.to_string())
 
 
     def generate_cypher(self, query: str):
@@ -244,7 +246,7 @@ class LLM:
         })
 
         response = self.model.models.generate_content(
-            model="gemini-2.0-flash-001",
+            model="gemini-2.0-pro-exp-02-05",
             contents=prompt.to_string()
         )
 
