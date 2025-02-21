@@ -3,7 +3,9 @@ LLM
 """
 from google import genai
 from .prompts import context_providing_prompt, cypher_generating_prompt
-from google.auth import default
+import os
+import json
+from google.oauth2 import service_account
 
 
 ONTOLOGY = """
@@ -219,7 +221,19 @@ class LLM:
     LLM
     """
     def __init__(self):
-        self.credentials, _ = default()
+         # Read service account JSON from Railway environment variable
+        service_account_info = json.loads(os.environ["GOOGLE_CREDENTIALS"])
+
+         # Create a temporary file to store credentials
+        tmp_path = "/tmp/gcp-service-account.json"
+        with open(tmp_path, "w") as temp_file:
+            json.dump(service_account_info, temp_file)
+
+        # Set GOOGLE_APPLICATION_CREDENTIALS to the temporary file path
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = tmp_path
+
+        self.credentials = service_account.Credentials.from_service_account_info(service_account_info)
+
         self.model = genai.Client(
             vertexai=True,
             location="us-central1",
