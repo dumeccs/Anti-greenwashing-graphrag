@@ -3,6 +3,7 @@ LLM
 """
 from google import genai
 from .prompts import context_providing_prompt, cypher_generating_prompt
+from google.auth import default
 
 
 ONTOLOGY = """
@@ -218,6 +219,7 @@ class LLM:
     LLM
     """
     def __init__(self):
+        self.credentials, _ = default()
         self.model = genai.Client(
             vertexai=True,
             location="us-central1",
