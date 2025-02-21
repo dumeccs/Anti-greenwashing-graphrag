@@ -222,7 +222,7 @@ class LLM:
     """
     def __init__(self):
          # Read service account JSON from Railway environment variable
-        service_account_info = json.loads(os.environ["GOOGLE_CREDENTIALS"])
+        service_account_info = json.loads(os.environ["GOOGLE_APPLICATION_CREDENTIALS"])
 
          # Create a temporary file to store credentials
         tmp_path = "/tmp/gcp-service-account.json"
