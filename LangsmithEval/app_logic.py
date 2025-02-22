@@ -27,12 +27,12 @@ class AppLogic:
         print("Vector Context:\n\n", vector_context)
 
         # Step 2: Generate Cypher query using the LLM
-        cypher_query = self.model.generate_cypher(query=question)
-        print("Generated Cypher Query:\n\n", cypher_query)
+        # cypher_query = self.model.generate_cypher(query=question)
+        # print("Generated Cypher Query:\n\n", cypher_query)
 
-        # # # # Step 3: Retrieve graph context from Neo4j
-        graph_context = self.conn.run_cypher(cypher_query)
-        print("Graph Context:\n\n", graph_context)
+        # # # # # # Step 3: Retrieve graph context from Neo4j
+        # graph_context = self.conn.run_cypher(cypher_query)
+        # print("Graph Context:\n\n", graph_context)
 
         # Step 4: Generate a response using the LLM
         response_stream = self.model.respond(question=question, graph_context="", vector_context=vector_context)
@@ -48,7 +48,10 @@ class AppLogic:
         except TypeError as e:
             raise ValueError(f"Invalid response stream: {e}")
 
-        return response
+        return {
+            "answer": response,
+            "documents": vector_context
+        }
 
         # Collect the generator's output into a string
         

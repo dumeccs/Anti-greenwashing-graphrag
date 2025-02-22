@@ -4,20 +4,20 @@ from datasets import Dataset
 from ragas import evaluate
 from ragas.metrics import (
     faithfulness,
-    # answer_relevance,  
-    # context_relevance,  
     context_recall,
     context_precision,
 )
 from app_logic import AppLogic
-from testdata import test_data
+# from testdataII import test_data
+# from testdata import test_data
+from testdataIII import test_data
 
 # Initialize application logic
 app = AppLogic()
 
 llm = ChatGoogleGenerativeAI(
     model="gemini-1.5-pro",
-    temperature=0,
+    temperature=0.3,
     max_tokens=None,
     timeout=None,
     max_retries=2,
@@ -47,8 +47,6 @@ dataset = Dataset.from_dict(data)
 # Define the metrics to evaluate
 metrics = [
     faithfulness,
-    # answer_relevance,
-    # context_relevance,
     context_recall,
     context_precision,
 ]
@@ -57,7 +55,21 @@ metrics = [
 result = evaluate(dataset, metrics, llm=llm)
 
 # Print the evaluation results
+
 print(result)
+result.upload()
+
+
+# # Define and close Weaviate client
+# from weaviate import Client
+# client = Client(os.getenv("WEAVIATE_URL"))
+# client.close()  # for Weaviate
+
+# # Initialize and close Neo4j driver
+# from neo4j import GraphDatabase
+
+# driver = GraphDatabase.driver(os.getenv("NEO4J_URI"), auth=(os.getenv("NEO4J_USER"), os.getenv("NEO4J_PASSWORD")))
+# driver.close()  # for Neo4j
 
 # Close connections
 app.close()

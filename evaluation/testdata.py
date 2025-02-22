@@ -1,42 +1,76 @@
 test_data = [
     {
-        "question": "What are the key principles of the UK FCA's greenwashing regulations?",
-        "ground_truth": "The UK FCA's greenwashing regulations emphasize transparency, accuracy, and substantiation of environmental claims. Firms must ensure that any environmental claims they make are clear, fair, and not misleading, and they must have robust evidence to back up these claims.",
+        "question": "What is the purpose of the FCA's anti-greenwashing rule?",
+        "ground_truth": "The purpose of the FCA's anti-greenwashing rule is to ensure that sustainability-related claims made by firms about their products and services are fair, clear, and not misleading. It aims to protect consumers from misleading claims and create a level playing field for firms offering genuinely sustainable products and services.",
         "contexts": [
-            "The Financial Conduct Authority (FCA) in the UK has introduced guidelines to combat greenwashing. These guidelines require firms to provide clear, accurate, and substantiated information about the environmental impact of their products or services.",
-            "FCA regulations mandate that firms avoid making misleading claims about the environmental benefits of their offerings. They must ensure that all claims are supported by credible evidence and are presented in a way that is not deceptive to consumers."
+            "The anti-greenwashing rule clarifies to firms that sustainability-related claims about their products and services must be fair, clear, and not misleading. It aims to protect consumers and create a level playing field for firms offering genuinely sustainable products.",
+            "The FCA introduced the anti-greenwashing rule to ensure that sustainability-related claims are not exaggerated, misleading, or unsubstantiated, thereby increasing consumer trust and market integrity."
         ]
     },
     {
-        "question": "How does the CMA define greenwashing?",
-        "ground_truth": "The CMA defines greenwashing as the practice of making false or misleading claims about the environmental benefits of a product, service, or business practice. This can include exaggerating the positive environmental impact or omitting significant negative impacts.",
+        "question": "What are the key expectations for firms under the FCA's anti-greenwashing rule?",
+        "ground_truth": "Firms are expected to ensure that sustainability-related claims are correct, clear, complete, and capable of being substantiated. Claims should not omit important information, should be presented in a way that is understandable, and should not exaggerate or mislead about the sustainability characteristics of a product or service.",
         "contexts": [
-            "The Competition and Markets Authority (CMA) in the UK has identified greenwashing as a significant issue. They define it as the act of misleading consumers about the environmental credentials of a product or service.",
-            "According to the CMA, greenwashing involves making claims that are not supported by evidence or that give a false impression of a product's environmental impact. This can include vague terms like 'eco-friendly' without proper substantiation."
+            "The FCA expects firms to ensure that sustainability-related claims are correct, clear, complete, and capable of being substantiated. Claims should not omit important information and should be presented in a way that is understandable.",
+            "Firms must avoid exaggerating or misleading claims about the sustainability characteristics of their products or services. They should also ensure that claims are supported by robust evidence and are regularly reviewed for compliance."
         ]
     },
     {
-        "question": "What are the penalties for non-compliance with the FCA's greenwashing regulations?",
-        "ground_truth": "Non-compliance with the FCA's greenwashing regulations can result in significant penalties, including fines, reputational damage, and enforcement actions. The FCA may also require firms to withdraw or amend misleading claims and take corrective actions to prevent future violations.",
+        "question": "Can you provide an example of a misleading claim that violates the FCA's anti-greenwashing rule?",
+        "ground_truth": "An example of a misleading claim is a firm stating that an investment fund is 'fossil fuel free' when the fund actually includes investments in companies involved in fossil fuel production, distribution, or sales. This claim is misleading because it is not factually correct and cannot be substantiated.",
         "contexts": [
-            "The FCA has the authority to impose fines and other penalties on firms that fail to comply with its greenwashing regulations. These penalties can be substantial and are intended to deter misleading environmental claims.",
-            "In cases of non-compliance, the FCA may require firms to take corrective actions, such as withdrawing misleading claims, issuing public corrections, and implementing new procedures to ensure future compliance."
+            "A firm claims an investment fund is 'fossil fuel free,' but the fund includes investments in companies involved in fossil fuel production, distribution, or sales. This claim is misleading because it is not factually correct and cannot be substantiated.",
+            "The FCA considers claims like 'fossil fuel free' to be misleading if they are not supported by evidence or if they exaggerate the sustainability characteristics of a product or service."
         ]
     },
     {
-        "question": "What steps should firms take to ensure compliance with CMA greenwashing guidelines?",
-        "ground_truth": "Firms should ensure that all environmental claims are accurate, clear, and substantiated by reliable evidence. They should avoid using vague or ambiguous language, regularly review their marketing materials, and train staff to understand and comply with CMA guidelines.",
+        "question": "How should firms ensure that their sustainability claims are clear and understandable?",
+        "ground_truth": "Firms should ensure that sustainability claims are transparent and straightforward, avoiding technical language unless it is widely understood. They should also consider the overall impression created by visual elements like images, logos, and colors, ensuring that these elements do not convey a misleading impression of the product's sustainability characteristics.",
         "contexts": [
-            "To comply with CMA greenwashing guidelines, firms must ensure that all environmental claims are backed by credible evidence. This includes avoiding the use of vague terms like 'green' or 'eco-friendly' without clear explanations.",
-            "The CMA recommends that firms regularly audit their marketing materials to ensure compliance with greenwashing guidelines. Staff training is also essential to ensure that all employees understand the importance of accurate and transparent environmental claims."
+            "Firms should ensure that sustainability claims are clear and presented in a way that can be understood by the intended audience. Technical language should be explained unless it is widely understood.",
+            "The FCA emphasizes that firms should consider the overall impression created by visual elements like images, logos, and colors, ensuring that these elements do not mislead consumers about the sustainability characteristics of a product or service."
         ]
     },
     {
-        "question": "Can you provide an example of a misleading environmental claim that would violate FCA regulations?",
-        "ground_truth": "An example of a misleading environmental claim that would violate FCA regulations is a company stating that its product is '100% eco-friendly' without providing any evidence or clarification. This claim could be considered misleading if the product has significant environmental impacts that are not disclosed.",
+        "question": "What should firms do if they identify problems with their sustainability claims?",
+        "ground_truth": "If firms identify problems with their sustainability claims, they should investigate and correct any deficiencies. This may involve withdrawing or amending misleading claims, ensuring that claims are supported by robust evidence, and taking corrective actions to prevent future violations.",
         "contexts": [
-            "The FCA considers claims like '100% eco-friendly' to be misleading if they are not supported by evidence. Such claims can give consumers a false impression of the product's environmental impact.",
-            "A company claiming that its product is 'completely sustainable' without providing any data or context could be in violation of FCA regulations. The FCA requires that all environmental claims be clear, accurate, and substantiated."
+            "Firms should investigate and correct any deficiencies in their sustainability claims, including withdrawing or amending misleading claims and ensuring that claims are supported by robust evidence.",
+            "The FCA expects firms to take corrective actions if they identify problems with their sustainability claims, ensuring that future claims comply with the anti-greenwashing rule."
+        ]
+    },
+    {
+        "question": "What is the scope of the FCA's anti-greenwashing rule?",
+        "ground_truth": "The FCA's anti-greenwashing rule applies when a firm communicates with clients in the UK about a product or service, or when it communicates or approves a financial promotion in the UK. The rule applies to references to the sustainability characteristics (environmental and/or social) of a product or service.",
+        "contexts": [
+            "The anti-greenwashing rule applies when a firm communicates with clients in the UK about a product or service, or when it communicates or approves a financial promotion in the UK.",
+            "The rule applies to references to the sustainability characteristics (environmental and/or social) of a product or service, ensuring that such claims are fair, clear, and not misleading."
+        ]
+    },
+    {
+        "question": "What are the consequences of non-compliance with the FCA's anti-greenwashing rule?",
+        "ground_truth": "Non-compliance with the FCA's anti-greenwashing rule can result in significant penalties, including fines, reputational damage, and enforcement actions. The FCA may also require firms to withdraw or amend misleading claims and take corrective actions to prevent future violations.",
+        "contexts": [
+            "Non-compliance with the anti-greenwashing rule can result in fines, reputational damage, and enforcement actions. The FCA may require firms to withdraw or amend misleading claims.",
+            "Firms that fail to comply with the anti-greenwashing rule may face penalties and be required to take corrective actions to ensure future compliance."
+        ]
+    },
+    {
+        "question": "How does the FCA define 'sustainability characteristics' in the context of the anti-greenwashing rule?",
+        "ground_truth": "The FCA defines 'sustainability characteristics' as environmental or social characteristics of a product or service. Governance is considered an enabler of environmental and/or social outcomes rather than an end in itself.",
+        "contexts": [
+            "The FCA defines 'sustainability characteristics' as environmental or social characteristics of a product or service. Governance is considered an enabler of these outcomes.",
+            "In the context of the anti-greenwashing rule, sustainability characteristics refer to the environmental or social aspects of a product or service, with governance playing a supporting role."
+        ]
+    },
+    {
+        "question": "What is an example of good practice in making sustainability claims?",
+        "ground_truth": "An example of good practice is a firm advertising a fund that invests in companies with good labor practices, clearly explaining the investment objectives, selection criteria, and monitoring processes in its marketing materials. The firm should also provide evidence to support its claims and ensure that the claims are transparent and understandable.",
+        "contexts": [
+            "A firm advertises a fund that invests in companies with good labor practices, clearly explaining the investment objectives, selection criteria, and monitoring processes in its marketing materials. This is an example of good practice in making sustainability claims.",
+            "Good practice involves providing clear, transparent, and substantiated sustainability claims, ensuring that the claims are understandable and supported by robust evidence."
         ]
     }
+     
+
 ]
