@@ -3,19 +3,12 @@ Script to create embedding for document chunks and saving to Weaviate DB
 """
 
 import os
-from typing import List
-
 from dotenv import load_dotenv
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
-from weaviate.classes.query import MetadataQuery
-
-# from rag.weaviate import Weaviate
-
-import weaviate
-from weaviate.classes.config import Configure, Property, DataType
 from weaviate.classes.data import DataObject
-from weaviate.classes.init import Auth
+
+from rag.weaviate import Weaviate
 
 load_dotenv()
 
@@ -24,82 +17,22 @@ wcd_url = os.getenv("WCD_URL")
 wcd_api_key = os.getenv("WCD_API_KEY")
 
 
-class Weaviate:
-    """
-    Class to interact with Weaviate DB
-    """
-    def __init__(self):
-        gemini_key = os.getenv("GEMINI_API_KEY")
-        headers = {
-            "X-Goog-Studio-Api-Key": gemini_key,
-            # "X-Vectorizer": "text2vec-gemini"
-        }
+TYPE = "CMA"
 
-        self.client = weaviate.connect_to_weaviate_cloud(
-            cluster_url=wcd_url,
-            auth_credentials=Auth.api_key(wcd_api_key),
-            skip_init_checks=True,
-            headers=headers
-        )
+type_to_source = {
+    "FCA": "FCA-greenwashing.txt",
+    "CMA": "CMAguideline (1).txt"
+}
 
-        print(self.client.is_ready(), "Hello ready")
+type_to_url = {
+    "CMA": "https://www.gov.uk/government/publications/green-claims-code-making-environmental-claims/environmental-claims-on-goods-and-services",
+    "FCA": "https://www.fca.org.uk/publications/finalised-guidance/fg24-3-finalised-non-handbook-guidance-anti-greenwashing-rule"
+}
 
-        COLLECTION_NAME = "GreenWashing_Collection"
-        if self.client.collections.exists(COLLECTION_NAME):
-            self.collection = self.client.collections.get(COLLECTION_NAME)
-            return
-        
-        self.collection = self.client.collections.create(
-            name = COLLECTION_NAME,
-            vectorizer_config=Configure.Vectorizer.text2vec_google_aistudio(),
-            properties=[
-                Property(name="chunk", data_type=DataType.TEXT),
-            ]
-        )
+print("Opening", type_to_source[TYPE], "...")
 
-    def close(self):
-        """
-        Closes the connection to the database
-        """
-        self.client.close()
-
-
-    def search_vector(self, query: str):
-        """
-        Creates a document in the database
-        """
-        res = self.collection.query.near_text(
-            query=query,
-            limit=5,
-            return_metadata=MetadataQuery(
-                distance=True,
-                certainty=True,
-                score=True,
-                explain_score=True,
-                is_consistent=True
-            ),
-        )
-
-        context: List[str] = []
-        for r in res.objects:
-            context.append(r.properties.get("chunk"))
-
-        return context
-
-
-    def add_chunks(self, content: List[dict]):
-        """
-        Creates a document in the database
-        """
-        res = self.collection.data.insert_many(content)
-        print(f"Chunks added in {res.elapsed_seconds}")
-
-
-w_conn = Weaviate()
-
-print("Opening file...")
-with open('FCA-greenwashing.txt', 'r', encoding='utf-8') as file:
-    content = file.read().replace('\n', '')
+with open(type_to_source[TYPE], 'r', encoding='utf-8') as file:
+    content = file.read()
 
 text_splitter = RecursiveCharacterTextSplitter(
     chunk_size=1000,
@@ -116,7 +49,7 @@ def model_to_data_object(t: Document):
     """
     properties = {
         'metadata': {
-            'source': 'FCA-greenwashing.txt'
+            'source': type_to_url[TYPE],
         },
         'chunk': t.model_dump()['page_content'], 
     }
@@ -124,9 +57,7 @@ def model_to_data_object(t: Document):
 
 
 chunks = list(map(model_to_data_object, texts))
-
-# w_conn.add_chunks(chunks)
-
-# w_conn.search_query("what are the rules for making anti-greenwashing claims?")
-
-w_conn.close()
+with Weaviate() as w_conn:
+    w_conn.add_chunks(chunks)
+    # res = w_conn.search_vector("why is tackling greenwashing a priority for us?")
+    # print(res)

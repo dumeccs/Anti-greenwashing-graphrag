@@ -30,12 +30,6 @@
     rdfs:comment "A company or organization that offers financial products or services." ;
     rdfs:subClassOf schema:Organization .
 
-###  http://neo4j.com/voc/greenwashing#Product
-:Product 
-    rdf:type owl:Class ;
-    rdfs:comment "A financial product or service offered by a firm." ;
-    rdfs:subClassOf schema:FinancialProduct .
-
 ###  http://neo4j.com/voc/greenwashing#Claim
 :Claim 
     rdf:type owl:Class ;
@@ -52,6 +46,13 @@
     rdf:type owl:Class ;
     rdfs:comment "Evidence or data that supports a sustainability-related claim." ;
     rdfs:subClassOf schema:Dataset .
+
+###  http://neo4j.com/voc/greenwashing#Product
+:Product 
+    rdf:type owl:Class ;
+    rdfs:comment "A financial product or service offered by a firm." ;
+    rdfs:subClassOf schema:FinancialProduct .
+
 
 ###  http://neo4j.com/voc/greenwashing#Stakeholder
 :Stakeholder 

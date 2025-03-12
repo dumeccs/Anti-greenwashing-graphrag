@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from rag.weaviate import Weaviate
 from rag.neo4j import Neo4jConnection
 from rag.llm import LLM
-import os
+import os, json
 from fastapi.middleware.cors import CORSMiddleware
 
 load_dotenv()
@@ -37,10 +37,11 @@ password = os.getenv("NEO4J_PASSWORD")
 
 model = LLM()
 
-def handle_stream(content):
+def handle_stream(content, sources):
     for chunk in content:
         s = f"event: message\ndata: {repr(chunk.text)}\n\n"
         yield s
+    yield "event: message\ndata: <SOURCES>" + json.dumps(list(sources)) + "\n\n"
     yield "event: message\ndata: END\n\n"
 
 
@@ -51,7 +52,9 @@ async def chat(query: str):
     """
 
     with Weaviate() as w:
-        vector_context = w.search_vector(query=query)
+        vector_res = w.search_vector(query=query)
+        vector_context = "\n".join([x['chunk'] for x in vector_res])
+        sources = set([source['metadata']['source'] for source in vector_res])
         print("Vector Context:\n\n", vector_context)
 
     cypher_query = model.generate_cypher(query=query)
@@ -61,6 +64,16 @@ async def chat(query: str):
         graph_context = conn.run_cypher(cypher_query)
         print("Graph Context:\n\n", graph_context)
 
-    stream = model.respond(question=query, graph_context=graph_context, vector_context=vector_context)
+    stream = model.respond(
+        question=query,
+        graph_context=graph_context,
+        vector_context=vector_context
+    )
 
-    return StreamingResponse(handle_stream(stream), headers={'Content-Type':'text/event-stream'}, media_type='text/event-stream')
+    return StreamingResponse(
+        handle_stream(stream, sources),
+        headers={
+            'Content-Type':'text/event-stream'
+        },
+        media_type='text/event-stream'
+    )

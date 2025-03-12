@@ -91,7 +91,7 @@ class Weaviate:
 
         context: List[str] = []
         for r in res.objects:
-            context.append(r.properties.get("chunk"))
+            context.append(r.properties)
 
         return context
 
