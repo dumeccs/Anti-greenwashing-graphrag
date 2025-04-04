@@ -222,17 +222,17 @@ class LLM:
     """
     def __init__(self):
          # Read service account JSON from Railway environment variable
-        # service_account_info = json.loads(os.environ["GOOGLE_APPLICATION_CREDENTIALS"])
+        service_account_info = json.loads(os.environ["GOOGLE_APPLICATION_CREDENTIALS"])
 
-        #  # Create a temporary file to store credentials
-        # tmp_path = "/tmp/gcp-service-account.json"
-        # with open(tmp_path, "w") as temp_file:
-        #     json.dump(service_account_info, temp_file)
+         # Create a temporary file to store credentials
+        tmp_path = "/tmp/gcp-service-account.json"
+        with open(tmp_path, "w") as temp_file:
+            json.dump(service_account_info, temp_file)
 
-        # # Set GOOGLE_APPLICATION_CREDENTIALS to the temporary file path
-        # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = tmp_path
+        # Set GOOGLE_APPLICATION_CREDENTIALS to the temporary file path
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = tmp_path
 
-        # self.credentials = service_account.Credentials.from_service_account_info(service_account_info)
+        self.credentials = service_account.Credentials.from_service_account_info(service_account_info)
 
         self.model = genai.Client(
             vertexai=True,
