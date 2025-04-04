@@ -222,17 +222,17 @@ class LLM:
     """
     def __init__(self):
          # Read service account JSON from Railway environment variable
-        service_account_info = json.loads(os.environ["GOOGLE_APPLICATION_CREDENTIALS"])
+        # service_account_info = json.loads(os.environ["GOOGLE_APPLICATION_CREDENTIALS"])
 
-         # Create a temporary file to store credentials
-        tmp_path = "/tmp/gcp-service-account.json"
-        with open(tmp_path, "w") as temp_file:
-            json.dump(service_account_info, temp_file)
+        #  # Create a temporary file to store credentials
+        # tmp_path = "/tmp/gcp-service-account.json"
+        # with open(tmp_path, "w") as temp_file:
+        #     json.dump(service_account_info, temp_file)
 
-        # Set GOOGLE_APPLICATION_CREDENTIALS to the temporary file path
-        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = tmp_path
+        # # Set GOOGLE_APPLICATION_CREDENTIALS to the temporary file path
+        # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = tmp_path
 
-        self.credentials = service_account.Credentials.from_service_account_info(service_account_info)
+        # self.credentials = service_account.Credentials.from_service_account_info(service_account_info)
 
         self.model = genai.Client(
             vertexai=True,
@@ -249,7 +249,7 @@ class LLM:
             "vector_context": vector_context,
             "graph_context": graph_context,
         })
-        return self.model.models.generate_content_stream(model="gemini-1.5-pro-002", contents=prompt.to_string())
+        return self.model.models.generate_content_stream(model="gemini-2.5-pro-exp-03-25", contents=prompt.to_string())
 
 
     def generate_cypher(self, query: str):
@@ -262,7 +262,7 @@ class LLM:
         })
 
         response = self.model.models.generate_content(
-            model="gemini-2.0-pro-exp-02-05",
+            model="gemini-2.5-pro-exp-03-25",
             contents=prompt.to_string()
         )
 

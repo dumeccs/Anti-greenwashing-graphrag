@@ -16,7 +16,7 @@ from testdataIII import test_data
 app = AppLogic()
 
 llm = ChatGoogleGenerativeAI(
-    model="gemini-1.5-pro",
+    model="gemini-2.5-pro-exp-03-25",
     temperature=0.3,
     max_tokens=None,
     timeout=None,

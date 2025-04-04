@@ -98,7 +98,7 @@ At the end of your response, explicitly state:
 Avoid simply stating the correct answer at the outset."""
 
 # Initialize Gemini model
-grader_llm = ChatGoogleGenerativeAI(model="gemini-1.5-pro",
+grader_llm = ChatGoogleGenerativeAI(model="gemini-2.5-pro-exp-03-25",
     temperature=0.3,
     max_tokens=None,
     timeout=None,
